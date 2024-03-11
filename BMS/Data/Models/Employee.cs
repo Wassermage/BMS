@@ -18,6 +18,8 @@ namespace BMS.Data.Models
         [MaxLength(100, ErrorMessage = "Maximum length of that field is 100.")]
         public string LastName { get; set; } = null!;
 
+        public string FullName => string.Join(" ", FirstName, LastName);
+
         [Required(AllowEmptyStrings = true, ErrorMessage = "This field is required.")]
         [MaxLength(100, ErrorMessage = "Maximum length of that field is 100.")]
         public string? JobTitle { get; set; }

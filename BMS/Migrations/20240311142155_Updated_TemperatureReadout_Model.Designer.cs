@@ -4,6 +4,7 @@ using BMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMS.Migrations
 {
     [DbContext(typeof(BmsDbContext))]
-    partial class BmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311142155_Updated_TemperatureReadout_Model")]
+    partial class Updated_TemperatureReadout_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,46 +103,6 @@ namespace BMS.Migrations
                     b.HasIndex("AccessControlGroupId");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("BMS.Data.Models.MaintenanceRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AssignedToId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedToId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("MaintenanceRequests");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.Room", b =>
@@ -235,23 +198,6 @@ namespace BMS.Migrations
                         .IsRequired();
 
                     b.Navigation("AccessControlGroup");
-                });
-
-            modelBuilder.Entity("BMS.Data.Models.MaintenanceRequest", b =>
-                {
-                    b.HasOne("BMS.Data.Models.Employee", "AssignedTo")
-                        .WithMany()
-                        .HasForeignKey("AssignedToId");
-
-                    b.HasOne("BMS.Data.Models.Employee", "Createdby")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssignedTo");
-
-                    b.Navigation("Createdby");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.TemperatureReader", b =>

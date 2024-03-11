@@ -1,0 +1,82 @@
+﻿@page "/maintenance/{RequestId:int}"
+@page "/maintenance/{RequestId:int}/view"
+
+<PageTitle>REQ/@RequestId</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject MaintenanceRequestService MaintenanceRequestService
+
+<h3>View Request</h3>
+
+<hr />
+
+@if (MaintenanceRequest == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card col col-xl-6">
+        <div class="card-header">
+            Request #@MaintenanceRequest.Id
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <b>Title:</b> 
+                <br />
+                @MaintenanceRequest.Title
+            </li>
+            <li class="list-group-item">
+                <b>Description:</b>
+                <br />
+                @MaintenanceRequest.Description
+            </li>
+            <li class="list-group-item">
+                <b>Status:</b>
+                <br />
+                @MaintenanceRequest.StatusFormatted
+            </li>
+            @if (MaintenanceRequest.AssignedTo != null)
+            {
+                <li class="list-group-item">
+                    <b>Assigned to:</b>
+                    <br />
+                    @MaintenanceRequest.AssignedTo.FullName
+                </li>
+            }
+            <li class="list-group-item">
+                <b>Created by:</b>
+                <br />
+                @MaintenanceRequest.CreatedBy.FullName
+            </li>
+            <li class="list-group-item">
+                <b>Create date:</b>
+                <br />
+                @MaintenanceRequest.CreatedDateFormatted
+            </li>
+        </ul>
+        <div class="m-3">
+            <a href="maintenance/@MaintenanceRequest.Id/edit" class="btn btn-primary w-100 rounded">Edit</a>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int RequestId { get; set; }
+
+    MaintenanceRequest? MaintenanceRequest;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(GetMaintenanceRequest);
+    }
+
+    private void GetMaintenanceRequest()
+    {
+        MaintenanceRequest = MaintenanceRequestService.GetMaintenanceRequest(RequestId);
+    }
+
+}

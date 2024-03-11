@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BMS.Data.Models
 {
@@ -7,7 +8,13 @@ namespace BMS.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Location (Room) of the reader is required.")]
-        public Room Room { get; set; }
+        [Required(AllowEmptyStrings = true, ErrorMessage = "This field is required.")]
+        [MaxLength(100, ErrorMessage = "Maximum length of that field is 100.")]
+        public string Name { get; set; } = "Temperature Reader";
+
+        // Relationship: Room
+        [ForeignKey(nameof(Room))]
+        public int RoomId { get; set; }
+        public Room Room { get; set; } = null!;
     }
 }

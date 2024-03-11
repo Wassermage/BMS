@@ -17,5 +17,7 @@ namespace BMS.Data.Models
         public ICollection<AccessControlGroupRoom> AccessControlGroupRooms { get; } = new List<AccessControlGroupRoom>();
         //public ICollection<AccessControlGroup> AccessControlGroups { get; } = new List<AccessControlGroup>();
 
+        // Relationship: TemperatureReader
+        public ICollection<TemperatureReader> TemperatureReaders { get; } = new List<TemperatureReader>();
     }
 }

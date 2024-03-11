@@ -27,6 +27,14 @@ namespace BMS.Services
                 return employee;
             }
         }
+        public IEnumerable<Employee> GetEmployees()
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                IEnumerable<Employee> employees = context.Employees.ToList();
+                return employees;
+            }
+        }
         public void RemoveEmployee(Employee employee)
         {
             using (var context = _dbContextFactory.CreateDbContext())

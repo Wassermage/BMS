@@ -19,5 +19,13 @@ namespace BMS.Services
                 context.SaveChanges();
             }
         }
+        public IEnumerable<TemperatureReader> GetTemperatureReaders()
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                IEnumerable<TemperatureReader> readers = context.TemperatureReaders.Include(reader => reader.Room).ToList();
+                return readers;
+            }
+        }
     }
 }

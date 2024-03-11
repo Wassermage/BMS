@@ -1,0 +1,131 @@
+﻿@page "/maintenance/{RequestId:int}/edit"
+
+<PageTitle>REQ/@RequestId</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject EmployeeService EmployeeService
+@inject MaintenanceRequestService MaintenanceRequestService
+
+<h3>View Request</h3>
+
+<hr />
+
+@if (employees == null ||MaintenanceRequest == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card col col-xl-6">
+        <div class="card-header">
+            Request #@MaintenanceRequest.Id
+        </div>
+        <div class="card-body">
+            @if (status == OperationStatus.FinishedPositive)
+            {
+                <p class="card-text text-success">Maintenance Request created!</p>
+            }
+            else if (status == OperationStatus.FinishedNegative)
+            {
+                <p class="card-text text-danger">Failed to create Maintenance Request!</p>
+            }
+            else
+            {
+                <EditForm Model="@MaintenanceRequest" OnValidSubmit="HandleEditRequestSubmit" FormName="NewMaintenanceRequest">
+                    <DataAnnotationsValidator />
+                    <div>
+                        <label for="Title" class="form-label">Title</label>
+                        <InputText @bind-Value="MaintenanceRequest.Title" class="form-control" id="Title" disabled readonly />
+                        <ValidationMessage For="@(() => MaintenanceRequest.Title)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <InputTextArea @bind-Value="MaintenanceRequest.Description" class="form-control" id="Description" disabled readonly />
+                        <ValidationMessage For="@(() => MaintenanceRequest.Description)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="Status" class="form-label">Status</label>
+                        <InputSelect @bind-Value="MaintenanceRequest.Status" id="Status" class="form-select">
+                            @foreach (RequestStatus status in Enum.GetValues(typeof(RequestStatus)))
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => MaintenanceRequest.Status)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="AssignedTo" class="form-label">Assigned to</label>
+                        <InputSelect @bind-Value="MaintenanceRequest.AssignedToId" id="AssignedTo" class="form-select">
+                            <option value="">@("<select>")</option>
+                            @foreach (var employee in employees)
+                            {
+                                <option value="@employee.Id">[#@employee.Id] @employee.FullName</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => MaintenanceRequest.AssignedToId)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="CreatedBy" class="form-label">Created by</label>
+                        <InputSelect @bind-Value="MaintenanceRequest.CreatedById" id="CreatedBy" class="form-select" disabled readonly>
+                            <option value="@MaintenanceRequest.CreatedById">[#@MaintenanceRequest.CreatedById] @MaintenanceRequest.CreatedBy.FullName</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => MaintenanceRequest.CreatedById)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="CreatedDate" class="form-label">Create date</label>
+                        <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="MaintenanceRequest.CreatedDate" class="form-control" id="CreatedDate" disabled readonly />
+                        <ValidationMessage For="@(() => MaintenanceRequest.CreatedDate)" />
+                    </div>
+                    <div class="mt-3">
+                        <input type="submit" value="Update" class="form-control btn btn-primary w-100 rounded" />
+                    </div>
+                </EditForm>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int RequestId { get; set; }
+
+    private OperationStatus status = OperationStatus.New;
+    private IEnumerable<Employee>? employees;
+    MaintenanceRequest? MaintenanceRequest;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadData);
+    }
+
+    private void HandleEditRequestSubmit(EditContext editContext)
+    {
+        status = OperationStatus.Submitted;
+        try
+        {
+            var updatedRequest = (MaintenanceRequest)editContext.Model;
+            MaintenanceRequestService.UpdateMaintenanceRequest(MaintenanceRequest, updatedRequest.Status, updatedRequest.AssignedTo);
+            status = OperationStatus.FinishedPositive;
+        }
+        catch
+        {
+            status = OperationStatus.FinishedNegative;
+        }
+    }
+
+    private void LoadData()
+    {
+        MaintenanceRequest = MaintenanceRequestService.GetMaintenanceRequest(RequestId);
+        employees = EmployeeService.GetEmployees();
+    }
+
+    private enum OperationStatus
+    {
+        New,
+        Submitted,
+        FinishedPositive,
+        FinishedNegative
+    }
+}

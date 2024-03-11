@@ -1,50 +1,102 @@
 ﻿@page "/temperature"
 
-<PageTitle>Temperature readouts</PageTitle>
+<PageTitle>Temperature Readouts</PageTitle>
 
 @using BMS.Data.Models
 @using BMS.Services
-@inject RoomService RoomService
+@using System.ComponentModel.DataAnnotations
 
-<h3>Temperature readouts</h3>
+@inject RoomService RoomService
+@inject TemperatureReaderService TemperatureReaderService
+@inject TemperatureReadoutService TemperatureReadoutService
+
+<h3>Temperature Readouts</h3>
 
 <hr />
 
-@if (rooms == null)
+@if (readers == null || rooms == null)
 {
     <div class="spinner"></div>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Room Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Room room in rooms)
-            {
+    <EditForm Model="@FormData" OnSubmit="HandleSubmit">
+        <div class="d-flex">
+            @* <label for="RoomId">Room: </label> *@
+            <InputSelect @bind-Value="FormData.RoomId" id="RoomId" class="form-select">
+                <option value="">@("<select>")</option>
+                @foreach (var room in rooms)
+                {
+                    <option value="@room.Id">@room.Name</option>
+                }
+            </InputSelect>
+            <InputSelect @bind-Value="FormData.TempReaderId" id="TempReaderId" class="form-select">
+                <option value="">@("<select>")</option>
+                @foreach (var reader in readers)
+                {
+                    <option value="@reader.Id">@reader.Name</option>
+                }
+            </InputSelect>
+            <input type="submit" value="Load" class="btn btn-primary" />
+        </div>
+    </EditForm>
+
+    @if (readouts != null)
+    {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@room.Id</td>
-                    <td>@room.Name</td>
+                    <th>Temperature Reader</th>
+                    <th>Readout Time</th>
+                    <th>Temp (C)</th>
+                    <th>Temp (F)</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var readout in readouts)
+                {
+                    <tr>
+                        <td>[#@readout.TemperatureReader.Id] @readout.TemperatureReader.Room.Name - @readout.TemperatureReader.Name</td>
+                        <td>@readout.ReadoutTime</td>
+                        <td>@readout.TemperatureC</td>
+                        <td>@readout.TemperatureF</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 
 @code {
+    private PickerModel FormData = new PickerModel();
     private IEnumerable<Room>? rooms;
+    private IEnumerable<TemperatureReader>? readers;
+    private IEnumerable<TemperatureReadout>? readouts;
+    private Room Room = new Room();
+
+    class PickerModel
+    {
+        [Required(ErrorMessage = "This field is required.")]
+        public int RoomId { get; set; }
+        public int? TempReaderId { get; set; }
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(LoadAllRooms);
+        await Task.Run(LoadAllRoomsAndReaders);
     }
 
-    private void LoadAllRooms()
+    private void HandleSubmit(EditContext editContext)
     {
-        rooms = RoomService.GetAllRooms();
+        var pickerModel = (PickerModel)editContext.Model;
+        readouts = TemperatureReadoutService.GetTemperatureReadoutsByRoom(pickerModel.RoomId).ToList();
+        if (pickerModel.TempReaderId.HasValue) readouts = readouts.Where(r => r.TemperatureReaderId == pickerModel.TempReaderId);
+    }
+
+    private void LoadAllRoomsAndReaders()
+    {
+        // Get all readers and then only get rooms that have readers
+        readers = TemperatureReaderService.GetTemperatureReaders();
+        rooms = readers.Select(r => r.Room).Distinct();
     }
 }

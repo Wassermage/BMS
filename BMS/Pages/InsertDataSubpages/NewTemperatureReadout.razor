@@ -1,0 +1,104 @@
+﻿@page "/insertdata/readout"
+
+<PageTitle>New Temperature Readout</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject RoomService RoomService
+@inject TemperatureReaderService TemperatureReaderService
+@inject TemperatureReadoutService TemperatureReadoutService
+
+<h3>New Temperature Readout</h3>
+
+<hr />
+
+<div class="card col col-lg-8 col-xl-6 col-xxl-4">
+    <div class="card-header">New Temperature Readout</div>
+    <div class="card-body">
+        @if (status == OperationStatus.FinishedPositive)
+        {
+            <p class="card-text text-success">Temperature Readout created!</p>
+        }
+        else if (status == OperationStatus.FinishedNegative)
+        {
+            <p class="card-text text-danger">Failed to create Temperature Readout!</p>
+        }
+        else
+        {
+            <EditForm Model="@TemperatureReadout" OnValidSubmit="HandleNewTemperatureReadoutSubmit" FormName="NewTempReader">
+                <DataAnnotationsValidator />
+                @if (readers == null)
+                {
+                    <p>Loading...</p>
+                }
+                else
+                {
+                    <div>
+                        <label for="ReaderName" class="form-label">Temperature (C)</label>
+                        <InputNumber @bind-Value="TemperatureReadout.TemperatureC" class="form-control" id="ReaderName" />
+                        <ValidationMessage For="@(() => TemperatureReadout.TemperatureC)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="ReaderId" class="form-label">Temperature Reader</label>
+                        <InputSelect @bind-Value="TemperatureReadout.TemperatureReaderId" id="ReaderId" class="form-select">
+                            <option value="">@("<Select>")</option>
+                            @foreach (var reader in readers)
+                            {
+                                <option value="@reader.Id">[#@reader.Id] @reader.Room.Name - @reader.Name</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => TemperatureReadout.TemperatureReaderId)" />
+                    </div>
+                    <div class="mt-3">
+                        <label for="ReadoutTime" class="form-label">Readout Time</label>
+                        <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="dd/MM/yyyy hh:mm:ss" @bind-Value="TemperatureReadout.ReadoutTime" class="form-control" id="ReadoutTime" />
+                        <ValidationMessage For="@(() => TemperatureReadout.ReadoutTime)" />
+                    </div>
+                }
+                <div class="mt-3">
+                    <input type="submit" value="Create" class="form-control btn btn-primary w-100 rounded" />
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    OperationStatus status = OperationStatus.New;
+    TemperatureReadout TemperatureReadout = new TemperatureReadout();
+    private IEnumerable<TemperatureReader>? readers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadAllTempReaders);
+    }
+
+    public void HandleNewTemperatureReadoutSubmit(EditContext editContext)
+    {
+        status = OperationStatus.Submitted;
+        try
+        {
+            var newReadout = (TemperatureReadout)editContext.Model;
+            TemperatureReadoutService.AddTemperatureReadout(newReadout);
+            status = OperationStatus.FinishedPositive;
+        }
+        catch
+        {
+            status = OperationStatus.FinishedNegative;
+        }
+    }
+
+    private void LoadAllTempReaders()
+    {
+        readers = TemperatureReaderService.GetTemperatureReaders();
+    }
+
+    private enum OperationStatus
+    {
+        New,
+        Submitted,
+        FinishedPositive,
+        FinishedNegative
+    }
+}

@@ -23,7 +23,15 @@ namespace BMS.Services
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {
-                List<TemperatureReadout> readouts = context.TemperatureReadouts.Where(readout => readout.TemperatureReader.Room.Id == room.Id).OrderByDescending(readout => readout.readoutTime).Take(10).ToList();
+                List<TemperatureReadout> readouts = context.TemperatureReadouts.Where(readout => readout.TemperatureReader.RoomId == room.Id).OrderByDescending(readout => readout.ReadoutTime).Take(20).Include(readout => readout.TemperatureReader.Room).ToList();
+                return readouts;
+            }
+        }
+        public List<TemperatureReadout> GetTemperatureReadoutsByRoom(int roomId)
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                List<TemperatureReadout> readouts = context.TemperatureReadouts.Where(readout => readout.TemperatureReader.RoomId == roomId).OrderByDescending(readout => readout.ReadoutTime).Take(20).Include(readout => readout.TemperatureReader.Room).ToList();
                 return readouts;
             }
         }

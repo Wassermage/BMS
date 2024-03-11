@@ -23,7 +23,7 @@ namespace BMS.Services
         {
             using(var context = _dbContextFactory.CreateDbContext())
             {
-                IEnumerable<Room> rooms = context.Rooms.ToList();
+                IEnumerable<Room> rooms = context.Rooms.Include(room => room.TemperatureReaders).ToList();
                 return rooms;
             }
         }
@@ -39,7 +39,7 @@ namespace BMS.Services
         {
             using(var context = _dbContextFactory.CreateDbContext())
             {
-                var room = context.Rooms.SingleOrDefault(r => r.Id == id);
+                var room = context.Rooms.Include(room => room.TemperatureReaders).SingleOrDefault(r => r.Id == id);
                 return room;
             }
         }

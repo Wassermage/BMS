@@ -1,0 +1,62 @@
+﻿@page "/maintenance/list"
+
+<PageTitle>Maintenance Requests</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject MaintenanceRequestService MaintenanceRequestService
+
+<h3>Maintenance Requests</h3>
+
+<hr />
+
+@if (requests == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created by</th>
+                <th>Create date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in requests)
+            {
+                <tr>
+                    <td>@request.Id</td>
+                    <td>@request.StatusFormatted</td>
+                    <td>@request.Title</td>
+                    <td>@request.Description</td>
+                    <td>@request.CreatedBy.FullName</td>
+                    <td>@request.CreatedDateFormatted</td>
+                    <td><a href="maintenance/@request.Id/view">View</a> <a href="maintenance/@request.Id/edit">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<MaintenanceRequest>? requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(GetMaintenanceRequests);
+    }
+
+    private void GetMaintenanceRequests()
+    {
+        requests = MaintenanceRequestService.GetMaintenanceRequests().Where(request => request.Status != RequestStatus.Closed).ToList();
+    }
+
+}

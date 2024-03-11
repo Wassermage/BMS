@@ -11,9 +11,9 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddTransient<AccessControlGroupService>();
 builder.Services.AddTransient<EmployeeService>();
+builder.Services.AddTransient<MaintenanceRequestService>();
 builder.Services.AddTransient<RoomService>();
 builder.Services.AddTransient<TemperatureReaderService>();
 builder.Services.AddTransient<TemperatureReadoutService>();

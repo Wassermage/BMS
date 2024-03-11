@@ -35,8 +35,15 @@ namespace BMS.Services
                 return group;
             }
         }
-
-        public void RemoveGroup(AccessControlGroup group)
+        public IEnumerable<AccessControlGroup> GetGroups()
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                IEnumerable<AccessControlGroup> groups = context.AccessControlGroups.ToList();
+                return groups;
+            }
+        }
+            public void RemoveGroup(AccessControlGroup group)
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {

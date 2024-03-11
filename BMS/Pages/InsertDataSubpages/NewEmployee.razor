@@ -5,6 +5,7 @@
 @using BMS.Data.Models
 @using BMS.Services
 
+@inject AccessControlGroupService AccessControlGroupService
 @inject EmployeeService EmployeeService
 
 <h3>New Employee</h3>
@@ -38,8 +39,17 @@
                     <ValidationMessage For="@(() => Employee.JobTitle)" />
                 </div>
                 <div class="mt-3">
-                    <label for="ACGroupId" class="form-label">Group ID</label>
-                    <InputNumber @bind-Value="Employee.AccessControlGroupId" class="form-control" id="ACGroupId" />
+                    <label for="ACGroup" class="form-label">Group</label>
+                    @* <InputNumber @bind-Value="Employee.AccessControlGroupId" class="form-control" id="ACGroupId" /> *@
+                    <InputSelect @bind-Value="Employee.AccessControlGroupId" id="ACGroup" class="form-select">
+                        @if (groups != null)
+                        {
+                            @foreach (var group in groups)
+                            {
+                                <option value="@group.Id">@group.Name</option>
+                            }
+                        }
+                    </InputSelect>
                     <ValidationMessage For="@(() => Employee.AccessControlGroupId)" />
                 </div>
                 <div class="mt-3">
@@ -58,11 +68,21 @@
 @code {
     bool submitted = false;
     Employee Employee = new Employee();
+    private IEnumerable<AccessControlGroup>? groups;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Task.Run(GetGroups);
+    }
 
     public void HandleNewEmployeeSubmit(EditContext editContext)
     {
         submitted = true;
         var newEmployee = (Employee)editContext.Model;
         EmployeeService.AddEmployee(newEmployee);
+    }
+    public void GetGroups()
+    {
+        groups = AccessControlGroupService.GetGroups();
     }
 }
