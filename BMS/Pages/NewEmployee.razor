@@ -1,0 +1,68 @@
+﻿@page "/insertdata/employee"
+
+<PageTitle>New Employee</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject EmployeeService EmployeeService
+
+<h3>New Employee</h3>
+
+<hr />
+
+<div class="card col col-lg-8 col-xl-6 col-xxl-4">
+    <div class="card-header">New Employee</div>
+    <div class="card-body">
+        @if (submitted == true)
+        {
+            <p class="card-text text-success">User created!</p>
+        }
+        else
+        {
+            <EditForm Model="@Employee" OnValidSubmit="HandleNewEmployeeSubmit" FormName="NewEmployee">
+                <DataAnnotationsValidator />
+                <div>
+                    <label for="FirstName" class="form-label">First Name</label>
+                    <InputText @bind-Value="Employee.FirstName" class="form-control" id="FirstName" />
+                    <ValidationMessage For="@(() => Employee.FirstName)" />
+                </div>
+                <div class="mt-3">
+                    <label for="LastName" class="form-label">Last Name</label>
+                    <InputText @bind-Value="Employee.LastName" class="form-control" id="LastName" />
+                    <ValidationMessage For="@(() => Employee.LastName)" />
+                </div>
+                <div class="mt-3">
+                    <label for="JobTitle" class="form-label">Job Title</label>
+                    <InputText @bind-Value="Employee.JobTitle" class="form-control" id="JobTitle" />
+                    <ValidationMessage For="@(() => Employee.JobTitle)" />
+                </div>
+                <div class="mt-3">
+                    <label for="ACGroupId" class="form-label">Group ID</label>
+                    <InputNumber @bind-Value="Employee.AccessControlGroupId" class="form-control" id="ACGroupId" />
+                    <ValidationMessage For="@(() => Employee.AccessControlGroupId)" />
+                </div>
+                <div class="mt-3">
+                    <label for="HireDate" class="form-label">Hire Date</label>
+                    <InputDate @bind-Value="Employee.HireDate" class="form-control" id="HireDate" />
+                    <ValidationMessage For="@(() => Employee.HireDate)" />
+                </div>
+                <div class="mt-3">
+                    <input type="submit" value="Create" class="form-control btn btn-primary w-100 rounded" />
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    bool submitted = false;
+    Employee Employee = new Employee();
+
+    public void HandleNewEmployeeSubmit(EditContext editContext)
+    {
+        submitted = true;
+        var newEmployee = (Employee)editContext.Model;
+        EmployeeService.AddEmployee(newEmployee);
+    }
+}

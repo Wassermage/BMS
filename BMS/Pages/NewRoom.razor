@@ -1,0 +1,48 @@
+﻿@page "/insertdata/room"
+
+<PageTitle>New Room</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject RoomService RoomService
+
+<h3>New Room</h3>
+
+<hr />
+
+<div class="card col col-lg-8 col-xl-6 col-xxl-4">
+    <div class="card-header">New Room</div>
+    <div class="card-body">
+        @if (submitted == true)
+        {
+            <p class="card-text text-success">Room created!</p>
+        }
+        else
+        {
+            <EditForm Model="@Room" OnValidSubmit="HandleNewRoomSubmit" FormName="NewRoom">
+                <DataAnnotationsValidator />
+                <div>
+                    <label for="Name" class="form-label">Room Name</label>
+                    <InputText @bind-Value="Room.Name" class="form-control" id="Name" />
+                    <ValidationMessage For="@(() => Room.Name)" />
+                </div>
+                <div class="mt-3">
+                    <input type="submit" value="Create" class="form-control btn btn-primary w-100 rounded" />
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+@code {
+    bool submitted = false;
+    Room Room = new Room();
+
+    public void HandleNewRoomSubmit(EditContext editContext)
+    {
+        submitted = true;
+        var newRoom = (Room)editContext.Model;
+        RoomService.AddRoom(newRoom);
+    }
+}

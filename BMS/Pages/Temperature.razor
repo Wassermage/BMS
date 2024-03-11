@@ -1,7 +1,50 @@
 ﻿@page "/temperature"
 
-<h3>Temperature</h3>
+<PageTitle>Temperature readouts</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+@inject RoomService RoomService
+
+<h3>Temperature readouts</h3>
+
+<hr />
+
+@if (rooms == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Room Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Room room in rooms)
+            {
+                <tr>
+                    <td>@room.Id</td>
+                    <td>@room.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
+    private IEnumerable<Room>? rooms;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadAllRooms);
+    }
+
+    private void LoadAllRooms()
+    {
+        rooms = RoomService.GetAllRooms();
+    }
 }

@@ -1,0 +1,133 @@
+﻿@page "/insertdata"
+
+<PageTitle>Insert data</PageTitle>
+
+@using BMS.Data.Models
+@using BMS.Services
+
+@inject RoomService RoomService
+@inject TemperatureReaderService TemperatureReaderService
+@inject TemperatureReadoutService TemperatureReadoutService
+
+<h3>Insert Data</h3>
+
+<hr />
+
+@* Employees *@
+<h4 class="mt-3">Employees</h4>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New Employee</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Create new employee</i></small></p>
+                <a href="insertdata/employee" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New Group</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Create new employee group</i></small></p>
+                <a href="insertdata/acgroup" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Rooms *@
+<h4 class="mt-3">Rooms</h4>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New Room</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Create new room</i></small></p>
+                <a href="insertdata/room" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New Temperature Reader</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Create new temperature reader</i></small></p>
+                <a href="" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New Temperature Readout</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Insert new temperature readout</i></small></p>
+                <a href="" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+</div
+
+@* Template *@
+@*
+<h4 class="mt-3">Other</h4>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="col">
+        <div class="card border-dark h-100">
+            <div class="card-header"><h5 class="card-title my-2">New...</h5></div>
+            <div class="card-body d-flex flex-column">
+                <p class="card-text"><small class="text-muted"><i>Create new ...</i></small></p>
+                <a href="" class="btn btn-primary mt-auto">Create</a>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+
+@* <div class="insert-forms"> *@
+    @* Room insertion *@
+    @*
+    <EditForm Model="@room" OnValidSubmit="HandleNewRoomSubmit" id="newRoom" class="insert-form">
+        <DataAnnotationsValidator />
+        <h3 class="insert-form-element">New Room</h3>
+        <div class="insert-form-element d-flex flex-column">
+            <label for="NameInput">Name</label>
+            <InputText id="NameInput" @bind-Value="@room.Name"></InputText>
+            <ValidationMessage For="@(() => room.Name)" />
+        </div>
+        <div class="insert-form-element">
+            <button type="submit" class="btn btn-primary w-100 rounded">Create</button>
+        </div>
+    </EditForm>
+    *@
+
+    @* TemperatureReader insertion *@
+    @*
+    <EditForm Model="@temperatureReader" OnValidSubmit="HandleNewTemperatureReaderSubmit" id="newTemperatureReader" class="insert-form">
+        <h3 class="insert-form-element">New Temp. Reader</h3>
+        <div class="insert-form-element d-flex flex-column">
+            <label for="RoomIdInput">Room ID</label>
+            <InputNumber id="RoomIdInput" @bind-Value="@temperatureReader.Room"></InputNumber>
+        </div>
+        <div class="insert-form-element">
+            <button type="submit" class="btn btn-primary w-100 rounded">Create</button>
+        </div>
+    </EditForm>
+    *@
+@* </div> *@
+
+@code {
+    Room room = new Room();
+    TemperatureReader temperatureReader = new TemperatureReader();
+
+    public void HandleNewRoomSubmit(EditContext editContext)
+    {
+        var newRoom = (Room)editContext.Model;
+    }
+
+    public void HandleNewTemperatureReaderSubmit(EditContext editContext)
+    {
+        var newTemperatureReader = (TemperatureReader)editContext.Model;
+    }
+
+}
