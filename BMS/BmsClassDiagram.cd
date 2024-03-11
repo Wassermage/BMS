@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BMS.Data.Models.AccessControlGroup">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQACAAAAAAAAAAAAAABAIA=</HashCode>
+      <FileName>Data\Models\AccessControlGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.AccessControlGroupRoom">
+    <Position X="7.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACCAAACAAAAQAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\AccessControlGroupRoom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.MaintenanceRequest">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAFACAgAEAAAAAAAAAAAAAAAAAQAgABAAAACAE=</HashCode>
+      <FileName>Data\Models\MaintenanceRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.Room">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Data\Models\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.TemperatureReader">
+    <Position X="11.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAACAAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\TemperatureReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.TemperatureReadout">
+    <Position X="14" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAgAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAEAAA=</HashCode>
+      <FileName>Data\Models\TemperatureReadout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.BmsDbContext">
+    <Position X="16.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABACAAAAAAgAAACCAAAAAABAAAAAAABAAA=</HashCode>
+      <FileName>Data\BmsDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Data.Models.Employee">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACCAEAAAAAAQIAAAAAAAAAAACAAAAAAAAAAAAAIAAg=</HashCode>
+      <FileName>Data\Models\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.AccessControlGroupService">
+    <Position X="5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAgAAAEAAAAAABAAAA=</HashCode>
+      <FileName>Services\AccessControlGroupService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.EmployeeService">
+    <Position X="2.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAAAAAgAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EmployeeService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.MaintenanceRequestService">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Services\MaintenanceRequestService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.RoomService">
+    <Position X="9.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAESAAABAAAAAACAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Services\RoomService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.TemperatureReaderService">
+    <Position X="11.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAACAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Services\TemperatureReaderService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Services.TemperatureReadoutService">
+    <Position X="14" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAAAAAAA=</HashCode>
+      <FileName>Services\TemperatureReadoutService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -40,7 +40,7 @@ namespace BMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccessControlGroups");
+                    b.ToTable("AccessControlGroups", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.AccessControlGroupRoom", b =>
@@ -63,7 +63,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("AccessControlGroupRooms");
+                    b.ToTable("AccessControlGroupRooms", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.Employee", b =>
@@ -99,7 +99,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("AccessControlGroupId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.MaintenanceRequest", b =>
@@ -139,7 +139,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("MaintenanceRequests");
+                    b.ToTable("MaintenanceRequests", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.Room", b =>
@@ -157,7 +157,7 @@ namespace BMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.TemperatureReader", b =>
@@ -180,7 +180,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("TemperatureReaders");
+                    b.ToTable("TemperatureReaders", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.TemperatureReadout", b =>
@@ -204,7 +204,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("TemperatureReaderId");
 
-                    b.ToTable("TemperatureReadouts");
+                    b.ToTable("TemperatureReadouts", (string)null);
                 });
 
             modelBuilder.Entity("BMS.Data.Models.AccessControlGroupRoom", b =>
