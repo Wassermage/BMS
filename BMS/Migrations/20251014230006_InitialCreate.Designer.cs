@@ -4,6 +4,7 @@ using BMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMS.Migrations
 {
     [DbContext(typeof(BmsDbContext))]
-    partial class BmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251014230006_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace BMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccessControlGroups", (string)null);
+                    b.ToTable("AccessControlGroups");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.AccessControlGroupRoom", b =>
@@ -63,7 +66,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("AccessControlGroupRooms", (string)null);
+                    b.ToTable("AccessControlGroupRooms");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.Employee", b =>
@@ -99,7 +102,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("AccessControlGroupId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.MaintenanceRequest", b =>
@@ -139,7 +142,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("MaintenanceRequests", (string)null);
+                    b.ToTable("MaintenanceRequests");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.Room", b =>
@@ -157,7 +160,7 @@ namespace BMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.TemperatureReader", b =>
@@ -180,7 +183,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("TemperatureReaders", (string)null);
+                    b.ToTable("TemperatureReaders");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.TemperatureReadout", b =>
@@ -204,7 +207,7 @@ namespace BMS.Migrations
 
                     b.HasIndex("TemperatureReaderId");
 
-                    b.ToTable("TemperatureReadouts", (string)null);
+                    b.ToTable("TemperatureReadouts");
                 });
 
             modelBuilder.Entity("BMS.Data.Models.AccessControlGroupRoom", b =>
