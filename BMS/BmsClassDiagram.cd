@@ -31,7 +31,7 @@
   <Class Name="BMS.Data.Models.TemperatureReader">
     <Position X="11.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAACAAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAiAAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Data\Models\TemperatureReader.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -96,6 +96,48 @@
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAIAAAAAAA=</HashCode>
       <FileName>Services\TemperatureReadoutService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.AccessControlGroupEndpoints">
+    <Position X="0.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Endpoints\AccessControlGroupEndpoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.EmployeeEndpoints">
+    <Position X="3.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Endpoints\EmployeeEndpoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.MaintenanceRequestEndpoints">
+    <Position X="6.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Endpoints\MaintenanceRequestEndpoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.RoomEndpoints">
+    <Position X="9.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Endpoints\RoomEndpoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.TemperatureReaderEndpoints">
+    <Position X="12.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Endpoints\TemperatureReaderEndpoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BMS.Endpoints.TemperatureReadoutEndpoints">
+    <Position X="15.75" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Endpoints\TemperatureReadoutEndpoints.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
