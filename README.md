@@ -1,3 +1,3 @@
 # Building Management System
 
-Aplikacja stworzona w ramach projektu z przedmiotu Programowanie Obiektowe
+Aplikacja rozwijana w ramach projektów realizowanych w trakcie studiów na WSIiZ.
